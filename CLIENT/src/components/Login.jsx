@@ -1,6 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios'
+import toast from 'react-hot-toast'
+import {useDispatch} from 'react-redux'
+import { setauthuser } from '../Redux/userslice';
+import {useNavigate} from 'react-router-dom'
 
 
 
@@ -11,19 +15,24 @@ const [User, setUser] = useState({
   email:'',
   password:''
 })
-
+const dispatch = useDispatch()
+const navigate = useNavigate()
 const handleSubmit = async(event) => {
   event.preventDefault();
   console.log('Form submitted!',User);
   try {
     const response = await axios.post("http://localhost:7000/api/v1/users/login",User)
-    console.log(response.data.message)
+    console.log(response.data.data.user)
     setUser({
       username: '',
       email: '',
       password: '',
     });
     toast.success(response.data.message);
+    console.log(response.data.data.user)
+dispatch(setauthuser(response.data.data.user))
+    navigate('/')
+
   } catch (error) {
     console.log(error)
     toast.error('Login failed. Please try again.');
