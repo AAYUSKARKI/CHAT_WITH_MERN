@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import {useDispatch} from 'react-redux'
 import { setauthuser } from '../Redux/userslice';
 import {useNavigate} from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 
 
@@ -30,7 +31,12 @@ const handleSubmit = async(event) => {
     });
     toast.success(response.data.message);
     console.log(response.data.data.user)
+    console.log(response.data.data.accesstoken)
 dispatch(setauthuser(response.data.data.user))
+
+Cookies.set('accesstoken', response.data.data.accesstoken); 
+// Set the Authorization header with the access token
+axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.accesstoken}`;
     navigate('/')
 
   } catch (error) {

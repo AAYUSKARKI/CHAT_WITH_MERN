@@ -6,10 +6,10 @@ const conversationschema = new Schema(
             type:mongoose.Schema.Types.ObjectId,
             ref:"User",
         }],
-        messages: {
+        messages: [{
             type:mongoose.Schema.Types.ObjectId,
             ref:"Message",
-        },
+        }],
     },
     {
         timestamps: true
