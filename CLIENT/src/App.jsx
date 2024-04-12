@@ -5,9 +5,20 @@ import Home from './components/Home';
 import Notfound from './components/Notfound';
 import Login from './components/Login';
 import Signup from './components/Signup';
-
-
+import {useSelector} from 'react-redux'
+import { useEffect, useState } from 'react';
+import io from 'socket.io-client'
 function App() {
+const [socket, setsocket] = useState(null)
+  const {authuser}=useSelector(store=>store.user)
+console.log(authuser)
+  useEffect(()=>{
+  const socket = io("http://localhost:7000/",{
+
+  });
+  setsocket(socket)
+  console.log(socket)
+  },[])
   return (
     <>
     <Router>
